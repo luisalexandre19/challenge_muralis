@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: spring-rabbitMQ-stream-manager
+  cloud:
+    function:
+      definition: hydrantReadings;pipePressure
+    stream:
+      bindings:
+        hydrantReadings-in-0:
+          destination: hydrant_readings
+          group: challenge
+          consumer:
+            concurrency: 1
+        pipePressure-in-0:
+          destination: pipe_pressure
+          group: challenge
+          consumer:
+            concurrency: 1
+
+app:
+  pipe:
+    pressure:
+      limits:
+        min: ${MIN_LIMIT_PIPE_PRESSURE:10}
+        max: ${MAX_LIMIT_PIPE_PRESSURE:35}
+
